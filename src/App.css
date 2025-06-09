@@ -1,0 +1,149 @@
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 3.2em;
+  line-height: 1.1;
+  color: inherit;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 30px;
+  justify-content: center;
+}
+
+.filters input,
+.filters button {
+  padding: 8px 12px;
+  border: 1px solid gray;
+  border-radius: 4px;
+  font-size: 1em;
+  font-family: inherit;
+  background-color: black;
+  color: inherit;
+  transition: border-color 0.25s, background-color 0.3s ease;
+}
+
+.filters button {
+  background-color: dodgerblue;
+  color: white;
+  cursor: pointer;
+}
+
+.filters button:hover {
+  background-color: blue;
+  border-color: blue;
+}
+
+.filters input:focus,
+.filters button:focus,
+.filters button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+  border-color: cornflowerblue;
+}
+
+@media (prefers-color-scheme: light) {
+  .filters input,
+  .filters button {
+    background-color: white;
+    color: navy;
+    border-color: lightgray;
+  }
+  .filters button {
+    background-color: dodgerblue;
+    color: white;
+  }
+}
+
+.date-filters-group {
+  display: flex;
+  gap: 10px;
+}
+
+.action-buttons-group {
+  display: flex;
+  gap: 10px;
+}
+
+.results-container {
+  width: 100%;
+  min-height: 100px;
+}
+
+.artwork-list-container {
+  margin: 0 auto;
+}
+
+.artwork-card {
+  border: 1px solid gray;
+  padding: 15px;
+  text-align: left;
+  background-color: black;
+  color: lightgray;
+  box-sizing: border-box;
+  margin: 10px auto;
+  max-width: 280px;
+}
+
+@media (prefers-color-scheme: light) {
+  .artwork-card {
+    background-color: white;
+    color: dimgray;
+    border-color: lightgray;
+  }
+}
+
+.artwork-image {
+  max-width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-bottom: 10px;
+  border-bottom: 1px solid gainsboro;
+  padding-bottom: 10px;
+}
+
+.artwork-card h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 1.2em;
+}
+
+.artwork-card p {
+  margin: 5px 0;
+  font-size: 0.9em;
+  color: lightgray;
+}
+
+@media (prefers-color-scheme: light) {
+  .artwork-card p {
+    color: dimgray;
+  }
+}
+
+.loading-message,
+.error-message,
+.no-results-message {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.1em;
+  color: gray;
+}
+
+.error-message {
+  color: red;
+}
+
+.no-image-placeholder {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #333;
+  color: #666;
+  border-bottom: 1px solid gainsboro;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
