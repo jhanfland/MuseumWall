@@ -17,7 +17,7 @@ const useArtworkFilters = (artworks, loading, error) => {
       return [];
     }
 
-    const { searchTerm, title, artist, place, startDate, endDate } = appliedFilters;
+    const { searchTerm, artist, place, startDate, endDate } = appliedFilters;
     return artworks.filter(artwork => {
 
       const searchMatch = !searchTerm || 
