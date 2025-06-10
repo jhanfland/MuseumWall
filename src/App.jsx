@@ -1,25 +1,48 @@
 import React, { useState, useEffect, useRef } from 'react';
 import useArtworkData from './hooks/useArtworkData';
 import useArtworkFilters from './hooks/useArtworkFilters';
-import ArtworkList from './components/ArtworkList';
+import ArtworkList from './components/artworkList.jsx';
 import './App.css';
 
 function App() {
   const { artworks, loading, error } = useArtworkData();
+  const [referenceNumberSearchTerm, setReferenceNumberSearchTerm] = useState('');
+  const [titleSearchTerm, setTitleSearchTerm] = useState('');
+  const [artistFilter, setArtistFilter] = useState('');
+  const [placeFilter, setPlaceFilter] = useState('');
+  const [startDateFilter, setStartDateFilter] = useState('');
+  const [endDateFilter, setEndDateFilter] = useState('');
+
   const {
     filteredArtworks,
-    referenceNumberSearchTerm, setReferenceNumberSearchTerm,
-    titleSearchTerm, setTitleSearchTerm,
-    artistFilter, setArtistFilter,
-    placeFilter, setPlaceFilter,
-    startDateFilter, setStartDateFilter,
-    endDateFilter, setEndDateFilter,
-    handleSearch, handleClearFilters,
+    handleSearch: applyFilters,
+    handleClearFilters: clearAllFilters,
     anyAppliedFilterActive
   } = useArtworkFilters(artworks, loading, error);
 
   const resultsContainerRef = useRef(null);
   const [listDimensions, setListDimensions] = useState({ width: 0, height: 0 });
+  
+  const handleSearch = () => {
+    applyFilters({
+      referenceNumber: referenceNumberSearchTerm,
+      title: titleSearchTerm,
+      artist: artistFilter,
+      place: placeFilter,
+      startDate: startDateFilter,
+      endDate: endDateFilter,
+    });
+  };
+
+  const handleClear = () => {
+    clearAllFilters();
+    setReferenceNumberSearchTerm('');
+    setTitleSearchTerm('');
+    setArtistFilter('');
+    setPlaceFilter('');
+    setStartDateFilter('');
+    setEndDateFilter('');
+  };
 
   useEffect(() => {
     const calculateSize = () => {
@@ -53,7 +76,7 @@ function App() {
 
         <div className="action-buttons-group">
           <button onClick={handleSearch}>Search</button>
-          <button onClick={handleClearFilters}>Clear Filters</button>
+          <button onClick={handleClear}>Clear Filters</button>
         </div>
       </div>
       

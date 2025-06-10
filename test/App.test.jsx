@@ -2,13 +2,11 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, it, expect, vi } from 'vitest';
-import App from '../../src/App';
-import useArtworkData from '../../src/hooks/useArtworkData';
+import App from '@/App';
+import useArtworkData from '@/hooks/useArtworkData';
 
-// Mock the useArtworkData hook
-vi.mock('../../src/hooks/useArtworkData');
+vi.mock('@/hooks/useArtworkData');
 
-// A controlled, mock dataset to test against.
 const mockArtworks = [
   { id: 1, title: 'Priest and Boy', artist_title: 'Lawrence Earle', main_reference_number: '1880.1', date_start: 1880, place_of_origin: 'United States' },
   { id: 2, title: 'Interior of St. Mark\'s', artist_title: 'David Neal', main_reference_number: '1887.232', date_start: 1869, place_of_origin: 'Munich' },
@@ -46,7 +44,7 @@ describe('App Component', () => {
     });
       
     render(<App />);
-    expect(screen.getByText(/enter a search query or apply filters/i)).toBeInTheDocument();
+    expect(screen.getByText(/enter a search or filter to see artworks/i)).toBeInTheDocument();
   });
 
   it('should allow a user to search by artist and display filtered results', async () => {
@@ -65,11 +63,7 @@ describe('App Component', () => {
     await user.type(artistInput, 'David Neal');
     await user.click(searchButton);
 
-    // After filtering, only the matching artwork card should be conceptually "visible"
-    // We check for its title.
     expect(screen.getByText("Interior of St. Mark's")).toBeInTheDocument();
-
-    // We check that titles of other artworks are NOT in the document.
     expect(screen.queryByText('Priest and Boy')).not.toBeInTheDocument();
     expect(screen.queryByText('Self-Portrait')).not.toBeInTheDocument();
   });
@@ -90,6 +84,6 @@ describe('App Component', () => {
     await user.type(titleInput, 'Monet');
     await user.click(searchButton);
 
-    expect(screen.getByText(/no artworks found matching your current criteria/i)).toBeInTheDocument();
+    expect(screen.getByText(/no artworks found matching this criteria/i)).toBeInTheDocument();
   });
 });

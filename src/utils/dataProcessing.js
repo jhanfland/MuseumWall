@@ -27,7 +27,6 @@ export const parseArtworkCsv = async () => {
         const processedArtworks = results.data
           .filter(row => {
             if (!row || typeof row !== 'object') return false;
-
             return essentialFields.every(field => {
               const value = row[field];
               if (value === null || value === undefined) return false;

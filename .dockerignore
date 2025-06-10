@@ -1,0 +1,19 @@
+# Ignore Node.js dependency folders
+node_modules
+
+# Ignore local environment files
+.env
+.env.local
+.env.*.local
+
+# Ignore build output (it will be generated inside the container)
+dist
+build
+
+# Ignore Docker, Git, and VSCode files
+.git
+.gitignore
+.dockerignore
+Dockerfile
+*.md
+.vscode

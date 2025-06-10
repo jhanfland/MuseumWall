@@ -18,4 +18,6 @@ yarn-error.log*
 *.sw?
 
 # environment
-.env
+.env.local
+
+.vercel
