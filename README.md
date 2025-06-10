@@ -4,3 +4,11 @@ This provides a way to search through the [Art Institute of Chicago Collection D
 
 Created using java vite and vitest
 
+Build Docker container and run it via:
+```sh
+build_docker.sh script
+```
+Run tests individually via:
+```sh
+npm test
+```
