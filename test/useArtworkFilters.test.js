@@ -2,6 +2,7 @@ import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import useArtworkFilters from '@/hooks/useArtworkFilters';
 
+// Remained the same
 const mockArtworks = [
   { id: 1, title: 'Priest and Boy', artist_title: 'Lawrence Earle', main_reference_number: '1880.1', date_start: 1880, place_of_origin: 'United States' },
   { id: 2, title: 'Interior of St. Mark\'s, Venice', artist_title: 'David Neal', main_reference_number: '1887.232', date_start: 1869, place_of_origin: 'Germany' },
@@ -19,7 +20,7 @@ const mockArtworks = [
   { id: 14, title: 'Nighthawks', artist_title: 'Edward Hopper', main_reference_number: '1942.51', date_start: 1942, place_of_origin: 'United States' },
   { id: 15, title: 'Portrait of a Man', artist_title: 'Rembrandt van Rijn', main_reference_number: '1950.1', date_start: 1655, place_of_origin: 'Netherlands' },
 ];
-
+// Updated to use the new 'searchTerm' filter instead of title and reference number
 describe('useArtworkFilters hook', () => {
   const renderFilterHook = () => {
     return renderHook(() => useArtworkFilters(mockArtworks, false, null));
@@ -137,6 +138,7 @@ describe('useArtworkFilters hook', () => {
     expect(result.current.filteredArtworks.length).toBe(0);
     expect(result.current.anyAppliedFilterActive).toBe(false);
   });
+  // New additional tests for searchTerm
    it('should combine multiple filters correctly with the new searchTerm', () => {
     const { result } = renderFilterHook();
 
@@ -146,5 +148,23 @@ describe('useArtworkFilters hook', () => {
 
     expect(result.current.filteredArtworks.length).toBe(1);
     expect(result.current.filteredArtworks[0].id).toBe(9);
+  });
+   it('should reject an almost complete reference number into searchTerm', () => {
+    const { result } = renderFilterHook();
+
+    act(() => {
+      result.current.handleSearch({ searchTerm: '1887.23'});
+    });
+
+    expect(result.current.filteredArtworks.length).toBe(0);
+  });
+    it('should reject a search combining name and search number', () => {
+    const { result } = renderFilterHook();
+
+    act(() => {
+      result.current.handleSearch({ searchTerm: 'Priest and Boy 1880.1'});
+    });
+
+    expect(result.current.filteredArtworks.length).toBe(0);
   });
 });

@@ -17,12 +17,12 @@ const useArtworkFilters = (artworks, loading, error) => {
       return [];
     }
 
-    const { searchTerm, artist, place, startDate, endDate } = appliedFilters;
+    const { searchTerm, artist, place, startDate, endDate } = appliedFilters; // combines title and reference number into searchTerm
     return artworks.filter(artwork => {
 
       const searchMatch = !searchTerm || 
-        artwork.main_reference_number?.trim().toLowerCase() === searchTerm.trim().toLowerCase() ||
-        artwork.title?.toLowerCase().includes(searchTerm.trim().toLowerCase());
+        artwork.main_reference_number?.trim().toLowerCase() === searchTerm.trim().toLowerCase() || // Accepts only exact reference_number matches
+        artwork.title?.toLowerCase().includes(searchTerm.trim().toLowerCase()); // Accepts partial name matches
       const artistMatch = !artist || artwork.artist_title?.toLowerCase().includes(artist.trim().toLowerCase());
       const placeMatch = !place || artwork.place_of_origin?.toLowerCase().includes(place.trim().toLowerCase());
       const startDateMatch = !startDate || (artwork.date_start && artwork.date_start >= parseInt(startDate, 10));

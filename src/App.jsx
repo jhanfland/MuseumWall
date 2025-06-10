@@ -6,7 +6,7 @@ import './App.css';
 
 function App() {
   const { artworks, loading, error } = useArtworkData();
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(''); // Combines title and reference number terms
   const [artistFilter, setArtistFilter] = useState('');
   const [placeFilter, setPlaceFilter] = useState('');
   const [startDateFilter, setStartDateFilter] = useState('');
@@ -55,7 +55,7 @@ function App() {
     window.addEventListener('resize', calculateSize);
     return () => window.removeEventListener('resize', calculateSize);
   }, []);
-
+  // Only returns a single search input field for reference number and title
   return (
     <div className="museum-wall-app">
       <h1>The Museum Wall</h1>
