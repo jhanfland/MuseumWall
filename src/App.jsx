@@ -19,7 +19,8 @@ function App() {
     anyAppliedFilterActive
   } = useArtworkFilters(artworks, loading, error);
 
-  // ... existing code ...
+  const resultsContainerRef = useRef(null);
+  const [listDimensions, setListDimensions] = useState({ width: 0, height: 0 });
   
   const handleSearch = () => {
     applyFilters({
