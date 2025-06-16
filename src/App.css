@@ -73,7 +73,15 @@ h1 {
 }
 
 .artwork-list-container {
-  margin: 0 auto;
+  padding: 0 20px;
+  max-width: 100%;
+}
+
+.artwork-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
 }
 
 .artwork-card {
@@ -83,8 +91,7 @@ h1 {
   background-color: black;
   color: lightgray;
   box-sizing: border-box;
-  margin: 10px auto;
-  max-width: 280px;
+  border-radius: 8px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -96,7 +103,7 @@ h1 {
 }
 
 .artwork-image {
-  max-width: 100%;
+  width: 100%;
   height: 200px;
   object-fit: contain;
   margin-bottom: 10px;
@@ -146,4 +153,29 @@ h1 {
   border-bottom: 1px solid gainsboro;
   margin-bottom: 10px;
   padding-bottom: 10px;
+}
+
+.loading-trigger {
+  text-align: center;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .artwork-list-container {
+    padding: 0 10px;
+  }
+  
+  .artwork-grid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .artwork-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
 }

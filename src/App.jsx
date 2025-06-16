@@ -19,8 +19,7 @@ function App() {
     anyAppliedFilterActive
   } = useArtworkFilters(artworks, loading, error);
 
-  const resultsContainerRef = useRef(null);
-  const [listDimensions, setListDimensions] = useState({ width: 0, height: 0 });
+  // ... existing code ...
   
   const handleSearch = () => {
     applyFilters({
@@ -41,20 +40,9 @@ function App() {
     setEndDateFilter('');
   };
 
-  useEffect(() => {
-    const calculateSize = () => {
-      if (resultsContainerRef.current) {
-        const { top } = resultsContainerRef.current.getBoundingClientRect();
-        const height = window.innerHeight - top - 20;
-        const width = resultsContainerRef.current.clientWidth;
-        setListDimensions({ width, height: height > 0 ? height : 0 });
-      }
-    };
+  // Determine which artworks to display
+  const displayArtworks = anyAppliedFilterActive ? filteredArtworks : artworks;
 
-    calculateSize();
-    window.addEventListener('resize', calculateSize);
-    return () => window.removeEventListener('resize', calculateSize);
-  }, []);
   return (
     <div className="museum-wall-app">
       <h1>The Museum Wall</h1>
@@ -80,24 +68,16 @@ function App() {
         </div>
       </div>
       
-      <div className="results-container" ref={resultsContainerRef}>
+      <div className="results-container">
         {loading && <p className="loading-message">Loading initial artwork data from CSV...</p>}
         {error && <p className="error-message">{error}</p>}
-
-        {!loading && !error && !anyAppliedFilterActive && (
-          <p className="no-results-message">Enter a search or filter to see artworks</p>
-        )}
 
         {!loading && !error && anyAppliedFilterActive && filteredArtworks.length === 0 && (
           <p className="no-results-message">No artworks found matching this criteria</p>
         )}
 
-        {!loading && !error && filteredArtworks.length > 0 && (
-          <ArtworkList
-            artworks={filteredArtworks}
-            listHeight={listDimensions.height}
-            getContainerWidth={() => listDimensions.width}
-          />
+        {!loading && !error && displayArtworks.length > 0 && (
+          <ArtworkList artworks={displayArtworks} />
         )}
       </div>
     </div>
