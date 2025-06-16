@@ -78,7 +78,7 @@ describe('App Component', () => {
       
     render(<App />);
       
-    const titleInput = screen.getByPlaceholderText(/search by title/i);
+    const titleInput = screen.getByPlaceholderText(/Search by Reference # or Title/i);
     const searchButton = screen.getByRole('button', { name: /search/i });
 
     await user.type(titleInput, 'Monet');

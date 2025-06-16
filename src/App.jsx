@@ -6,8 +6,7 @@ import './App.css';
 
 function App() {
   const { artworks, loading, error } = useArtworkData();
-  const [referenceNumberSearchTerm, setReferenceNumberSearchTerm] = useState('');
-  const [titleSearchTerm, setTitleSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(''); // Combines title and reference number terms
   const [artistFilter, setArtistFilter] = useState('');
   const [placeFilter, setPlaceFilter] = useState('');
   const [startDateFilter, setStartDateFilter] = useState('');
@@ -25,8 +24,7 @@ function App() {
   
   const handleSearch = () => {
     applyFilters({
-      referenceNumber: referenceNumberSearchTerm,
-      title: titleSearchTerm,
+      searchTerm: searchTerm,
       artist: artistFilter,
       place: placeFilter,
       startDate: startDateFilter,
@@ -36,8 +34,7 @@ function App() {
 
   const handleClear = () => {
     clearAllFilters();
-    setReferenceNumberSearchTerm('');
-    setTitleSearchTerm('');
+    setSearchTerm('');
     setArtistFilter('');
     setPlaceFilter('');
     setStartDateFilter('');
@@ -58,14 +55,18 @@ function App() {
     window.addEventListener('resize', calculateSize);
     return () => window.removeEventListener('resize', calculateSize);
   }, []);
-
+  // Only returns a single search input field for reference number and title
   return (
     <div className="museum-wall-app">
       <h1>The Museum Wall</h1>
 
       <div className="filters">
-        <input type="text" placeholder="Search by Reference #" value={referenceNumberSearchTerm} onChange={(e) => setReferenceNumberSearchTerm(e.target.value)} />
-        <input type="text" placeholder="Search by Title" value={titleSearchTerm} onChange={(e) => setTitleSearchTerm(e.target.value)} />
+        <input 
+          type="text" 
+          placeholder="Search by Reference # or Title" 
+          value={searchTerm} 
+          onChange={(e) => setSearchTerm(e.target.value)} 
+        />
         <input type="text" placeholder="Filter by Artist" value={artistFilter} onChange={(e) => setArtistFilter(e.target.value)} />
         <input type="text" placeholder="Filter by Place of Origin" value={placeFilter} onChange={(e) => setPlaceFilter(e.target.value)} />
 
