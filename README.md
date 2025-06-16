@@ -6,7 +6,7 @@ Created using java vite and vitest
 
 Build Docker container and run it via:
 ```sh
-build_docker.sh script
+./buildAndRunDocker.sh
 ```
 Run tests individually via:
 ```sh
