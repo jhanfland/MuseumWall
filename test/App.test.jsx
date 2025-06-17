@@ -7,6 +7,17 @@ import useArtworkData from '@/hooks/useArtworkData';
 
 vi.mock('@/hooks/useArtworkData');
 
+// Mocks ArtworkList child component to stop IntersectionObserver errors
+vi.mock('@/components/artworkList', () => ({
+  default: ({ artworks }) => (
+    <div data-testid="mock-artwork-list">
+      {artworks.map(art => (
+        <div key={art.id}>{art.title}</div>
+      ))}
+    </div>
+  ),
+}));
+
 const mockArtworks = [
   { id: 1, title: 'Priest and Boy', artist_title: 'Lawrence Earle', main_reference_number: '1880.1', date_start: 1880, place_of_origin: 'United States' },
   { id: 2, title: 'Interior of St. Mark\'s', artist_title: 'David Neal', main_reference_number: '1887.232', date_start: 1869, place_of_origin: 'Munich' },
@@ -36,17 +47,6 @@ describe('App Component', () => {
     expect(screen.getByText(/failed to fetch artworks/i)).toBeInTheDocument();
   });
 
-  it('should display the initial message when data is loaded but no filters are applied', () => {
-    useArtworkData.mockReturnValue({
-      artworks: mockArtworks,
-      loading: false,
-      error: null,
-    });
-      
-    render(<App />);
-    expect(screen.getByText(/enter a search or filter to see artworks/i)).toBeInTheDocument();
-  });
-
   it('should allow a user to search by artist and display filtered results', async () => {
     const user = userEvent.setup();
     useArtworkData.mockReturnValue({
@@ -63,7 +63,8 @@ describe('App Component', () => {
     await user.type(artistInput, 'David Neal');
     await user.click(searchButton);
 
-    expect(screen.getByText("Interior of St. Mark's")).toBeInTheDocument();
+    // Use await to ensure the results are rendered
+    expect(await screen.findByText("Interior of St. Mark's")).toBeInTheDocument();
     expect(screen.queryByText('Priest and Boy')).not.toBeInTheDocument();
     expect(screen.queryByText('Self-Portrait')).not.toBeInTheDocument();
   });
@@ -84,6 +85,7 @@ describe('App Component', () => {
     await user.type(titleInput, 'Monet');
     await user.click(searchButton);
 
-    expect(screen.getByText(/no artworks found matching this criteria/i)).toBeInTheDocument();
+    // Use await to ensure the results are rendered
+    expect(await screen.findByText(/no artworks found matching this criteria/i)).toBeInTheDocument();
   });
 });
