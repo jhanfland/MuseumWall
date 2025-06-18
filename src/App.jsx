@@ -41,7 +41,6 @@ function App() {
     setEndDateFilter('');
   };
 
-  // Determine which artworks to display
   const displayArtworks = anyAppliedFilterActive ? filteredArtworks : artworks;
 
   return (
