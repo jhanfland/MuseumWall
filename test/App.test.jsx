@@ -7,7 +7,6 @@ import useArtworkData from '@/hooks/useArtworkData';
 
 vi.mock('@/hooks/useArtworkData');
 
-// Mocks ArtworkList child component to stop IntersectionObserver errors
 vi.mock('@/components/artworkList', () => ({
   default: ({ artworks }) => (
     <div data-testid="mock-artwork-list">
@@ -63,7 +62,6 @@ describe('App Component', () => {
     await user.type(artistInput, 'David Neal');
     await user.click(searchButton);
 
-    // Use await to ensure the results are rendered
     expect(await screen.findByText("Interior of St. Mark's")).toBeInTheDocument();
     expect(screen.queryByText('Priest and Boy')).not.toBeInTheDocument();
     expect(screen.queryByText('Self-Portrait')).not.toBeInTheDocument();
@@ -85,7 +83,6 @@ describe('App Component', () => {
     await user.type(titleInput, 'Monet');
     await user.click(searchButton);
 
-    // Use await to ensure the results are rendered
     expect(await screen.findByText(/no artworks found matching this criteria/i)).toBeInTheDocument();
   });
 });

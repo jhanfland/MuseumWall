@@ -12,7 +12,6 @@ const ArtworkList = ({ artworks }) => {
     if (isLoading || displayedItems >= artworks.length) return;
     
     setIsLoading(true);
-    // Simulate loading delay for better UX
     setTimeout(() => {
       setDisplayedItems(prev => Math.min(prev + ITEMS_PER_PAGE, artworks.length));
       setIsLoading(false);
@@ -20,7 +19,6 @@ const ArtworkList = ({ artworks }) => {
   }, [artworks.length, displayedItems, isLoading]);
 
   useEffect(() => {
-    // Reset displayed items when artworks change
     setDisplayedItems(ITEMS_PER_PAGE);
   }, [artworks]);
 

@@ -161,7 +161,6 @@ h1 {
   margin-top: 20px;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .artwork-list-container {
     padding: 0 10px;
