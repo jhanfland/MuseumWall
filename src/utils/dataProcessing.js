@@ -34,6 +34,15 @@ export const parseArtworkCsv = async () => {
               return true;
             });
           })
+          // Additional filter to ensure image_id is valid and not empty
+          .filter(row => {
+            const imageId = row.image_id;
+            return imageId && 
+                   typeof imageId === 'string' && 
+                   imageId.trim() !== '' && 
+                   imageId.trim() !== 'null' && 
+                   imageId.trim() !== 'undefined';
+          })
           .map(artwork => ({
             id: artwork.id,
             main_reference_number: String(artwork.main_reference_number).trim(),
@@ -42,9 +51,7 @@ export const parseArtworkCsv = async () => {
             artist_title: artwork.artist_title ? String(artwork.artist_title).trim() : 'N/A',
             place_of_origin: artwork.place_of_origin ? String(artwork.place_of_origin).trim() : 'N/A',
             date_start: artwork.date_start,
-            image_link: artwork.image_id
-              ? `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`
-              : null,
+            image_link: `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`,
           }));
 
         resolve(processedArtworks);
