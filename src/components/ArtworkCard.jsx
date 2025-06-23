@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const ArtworkCard = ({ artwork, onClick }) => {
+const ArtworkCard = ({ artwork, isFavorited, onToggleFavorite, onDownload, onClick }) => {
   const [isValid, setIsValid] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,6 +26,16 @@ const ArtworkCard = ({ artwork, onClick }) => {
     };
   }, [artwork.image_link, artwork.id]);
 
+  const handleFavoriteClick = (e) => {
+    e.stopPropagation();
+    onToggleFavorite(artwork.id);
+  };
+
+  const handleDownloadClick = (e) => {
+    e.stopPropagation();
+    onDownload(artwork.image_link, `${artwork.title}.jpg`);
+  };
+
   if (isLoading) {
     return <div className="artwork-card-placeholder">Loading...</div>;
   }
@@ -36,6 +46,22 @@ const ArtworkCard = ({ artwork, onClick }) => {
 
   return (
     <div className="artwork-card clickable" onClick={onClick}>
+      <div className="artwork-card-actions">
+        <button 
+          onClick={handleFavoriteClick}
+          className={`favorite-btn ${isFavorited ? 'favorited' : ''}`}
+          title={isFavorited ? 'Remove from favorites' : 'Add to favorites'}
+        >
+          {isFavorited ? '❤️' : '🤍'}
+        </button>
+        <button 
+          onClick={handleDownloadClick}
+          className="download-btn"
+          title="Download image"
+        >
+          📥
+        </button>
+      </div>
       <img src={artwork.image_link} alt={artwork.title} className="artwork-image" />
       <h3>{artwork.title}</h3>
       <p><strong>Artist:</strong> {artwork.artist_title || 'N/A'}</p>

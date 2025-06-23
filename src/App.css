@@ -92,6 +92,7 @@ h1 {
   color: lightgray;
   box-sizing: border-box;
   border-radius: 8px;
+  position: relative;
 }
 
 @media (prefers-color-scheme: light) {
@@ -176,111 +177,119 @@ h1 {
   }
 }
 
-.enlarged-artwork-container {
-  margin-bottom: 30px;
-  border: 2px solid gray;
-  border-radius: 8px;
-  padding: 20px;
-  background-color: black;
-  color: lightgray;
+.artwork-card-actions {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  z-index: 1;
+}
+
+.favorite-btn,
+.download-btn {
+  background-color: rgba(0, 0, 0, 0.7);
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.favorite-btn:hover,
+.download-btn:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+.favorite-btn.favorited {
+  background-color: rgba(220, 53, 69, 0.8);
 }
 
 @media (prefers-color-scheme: light) {
-  .enlarged-artwork-container {
+  .favorite-btn,
+  .download-btn {
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .favorite-btn:hover,
+  .download-btn:hover {
+    background-color: rgba(255, 255, 255, 1);
+  }
+}
+
+.enlarged-artwork-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.enlarged-artwork-modal {
+  background-color: black;
+  color: lightgray;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 2px solid gray;
+}
+
+@media (prefers-color-scheme: light) {
+  .enlarged-artwork-modal {
     background-color: white;
     color: dimgray;
     border-color: lightgray;
   }
 }
 
-.enlarged-artwork-header {
+.enlarged-artwork-actions {
   display: flex;
-  justify-content: space-between;
+  gap: 10px;
   align-items: center;
-  margin-bottom: 20px;
-  border-bottom: 1px solid gray;
-  padding-bottom: 10px;
 }
 
-.enlarged-artwork-header h2 {
-  margin: 0;
-  font-size: 1.5em;
-}
-
-.close-enlarged-btn {
-  background-color: #dc3545;
-  color: white;
-  border: none;
+.enlarged-artwork-actions .favorite-btn,
+.enlarged-artwork-actions .download-btn {
+  width: auto;
+  height: auto;
   padding: 8px 12px;
   border-radius: 4px;
-  cursor: pointer;
-  font-size: 1em;
-  transition: background-color 0.3s ease;
+  background-color: #6c757d;
+  color: white;
+  font-size: 14px;
 }
 
-.close-enlarged-btn:hover {
-  background-color: #c82333;
+.enlarged-artwork-actions .favorite-btn.favorited {
+  background-color: #dc3545;
 }
 
-.enlarged-artwork-content {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
+.enlarged-artwork-actions .download-btn {
+  background-color: #28a745;
 }
 
-.enlarged-artwork-image {
-  max-width: 400px;
-  max-height: 400px;
-  object-fit: contain;
-  border: 1px solid gray;
-  border-radius: 4px;
+.enlarged-artwork-actions .favorite-btn:hover {
+  background-color: #dc3545;
 }
 
-.enlarged-artwork-details {
-  flex: 1;
-  min-width: 0;
+.enlarged-artwork-actions .download-btn:hover {
+  background-color: #218838;
 }
-
-.enlarged-artwork-details h3 {
-  margin-top: 0;
-  margin-bottom: 15px;
-  font-size: 1.4em;
-}
-
-.enlarged-artwork-details p {
-  margin: 8px 0;
-  font-size: 1em;
-  line-height: 1.4;
-}
-
-@media (max-width: 768px) {
-  .enlarged-artwork-content {
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .enlarged-artwork-image {
-    max-width: 100%;
-    align-self: center;
-  }
-  
-  .enlarged-artwork-header {
-    flex-direction: column;
-    gap: 10px;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .enlarged-artwork-container {
-    padding: 15px;
-  }
-  
-  .enlarged-artwork-header h2 {
-    font-size: 1.3em;
-  }
-}
-
 @media (max-width: 768px) {
   .artwork-list-container {
     padding: 0 10px;

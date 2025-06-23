@@ -11,6 +11,30 @@ function App() {
   const [placeFilter, setPlaceFilter] = useState('');
   const [startDateFilter, setStartDateFilter] = useState('');
   const [endDateFilter, setEndDateFilter] = useState('');
+  const [favorites, setFavorites] = useState([]);
+
+  // Load favorites from localStorage on mount
+  useEffect(() => {
+    const savedFavorites = localStorage.getItem('artworkFavorites');
+    if (savedFavorites) {
+      setFavorites(JSON.parse(savedFavorites));
+    }
+  }, []);
+
+  // Save favorites to localStorage whenever favorites change
+  useEffect(() => {
+    localStorage.setItem('artworkFavorites', JSON.stringify(favorites));
+  }, [favorites]);
+
+  const toggleFavorite = (artworkId) => {
+    setFavorites(prev => {
+      if (prev.includes(artworkId)) {
+        return prev.filter(id => id !== artworkId);
+      } else {
+        return [...prev, artworkId];
+      }
+    });
+  };
 
   const {
     filteredArtworks,
@@ -41,7 +65,19 @@ function App() {
     setEndDateFilter('');
   };
 
-  const displayArtworks = anyAppliedFilterActive ? filteredArtworks : artworks;
+  // Sort artworks to show favorites first
+  const sortArtworksByFavorites = (artworkList) => {
+    return [...artworkList].sort((a, b) => {
+      const aIsFavorite = favorites.includes(a.id);
+      const bIsFavorite = favorites.includes(b.id);
+      if (aIsFavorite && !bIsFavorite) return -1;
+      if (!aIsFavorite && bIsFavorite) return 1;
+      return 0;
+    });
+  };
+
+  const baseArtworks = anyAppliedFilterActive ? filteredArtworks : artworks;
+  const displayArtworks = sortArtworksByFavorites(baseArtworks);
 
   return (
     <div className="museum-wall-app">
@@ -77,7 +113,11 @@ function App() {
         )}
 
         {!loading && !error && displayArtworks.length > 0 && (
-          <ArtworkList artworks={displayArtworks} />
+          <ArtworkList 
+            artworks={displayArtworks} 
+            favorites={favorites}
+            onToggleFavorite={toggleFavorite}
+          />
         )}
       </div>
     </div>
