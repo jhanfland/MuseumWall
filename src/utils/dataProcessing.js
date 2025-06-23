@@ -21,7 +21,7 @@ export const parseArtworkCsv = async () => {
           'artist_title',
           'place_of_origin',
           'date_start',
-          'image_id'  // Note: 'image_link' is not required but will be checked for generalization
+          'image_id'
         ];
 
         const filteredArtworks = results.data
@@ -35,13 +35,11 @@ export const parseArtworkCsv = async () => {
             });
           })
           .map(artwork => {
-            // Generalize image_link: Prefer a direct 'image_link' from CSV if it's a valid URL;
-            // otherwise, construct from 'image_id' for backwards compatibility.
             let imageLink = null;
             if (artwork.image_link && typeof artwork.image_link === 'string' && artwork.image_link.trim().startsWith('http')) {
-              imageLink = artwork.image_link.trim();  // Use provided full URL if available
+              imageLink = artwork.image_link.trim();
             } else if (artwork.image_id) {
-              imageLink = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`;  // Fallback construction
+              imageLink = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`;
             }
 
             return {
@@ -52,12 +50,11 @@ export const parseArtworkCsv = async () => {
               artist_title: artwork.artist_title ? String(artwork.artist_title).trim() : 'N/A',
               place_of_origin: artwork.place_of_origin ? String(artwork.place_of_origin).trim() : 'N/A',
               date_start: artwork.date_start,
-              image_link: imageLink,  // May be null if no valid link
+              image_link: imageLink,
             };
           });
 
-        // Resolve with all processed artworks (no image validation here)
-        resolve(filteredArtworks.filter(artwork => artwork.image_link !== null));  // Exclude if no image_link at all
+        resolve(filteredArtworks.filter(artwork => artwork.image_link !== null));
       },
       error: (error) => {
         reject(new Error("Error downloading or parsing CSV: " + error.message));

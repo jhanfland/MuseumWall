@@ -87,7 +87,6 @@ const ArtworkList = ({ artworks }) => {
       
       <div className="artwork-grid">
         {visibleArtworks.map((artwork, index) => (
-          // Replace direct rendering with ArtworkCard for lazy validation
           <ArtworkCard 
             key={artwork.id || index} 
             artwork={artwork} 
