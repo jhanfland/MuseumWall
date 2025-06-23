@@ -92,6 +92,7 @@ const ArtworkList = ({ artworks, favorites, toggleFavorite }) => {  // Updated: 
               <p><strong>Reference #:</strong> {enlargedArtwork.main_reference_number}</p>
             </div>
           </div>
+          </div>
         </div>
       )}
       <div className="artwork-grid">
