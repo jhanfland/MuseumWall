@@ -66,7 +66,7 @@ const ArtworkList = ({ artworks, favorites, toggleFavorite }) => {  // Updated: 
       setEnlargedArtwork(null);
     }
   };
-
+  
   return (
     <div className="artwork-list-container">
       {enlargedArtwork && (
