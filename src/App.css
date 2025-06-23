@@ -160,6 +160,126 @@ h1 {
   padding: 20px;
   margin-top: 20px;
 }
+.artwork-card.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.artwork-card.clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@media (prefers-color-scheme: light) {
+  .artwork-card.clickable:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.enlarged-artwork-container {
+  margin-bottom: 30px;
+  border: 2px solid gray;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: black;
+  color: lightgray;
+}
+
+@media (prefers-color-scheme: light) {
+  .enlarged-artwork-container {
+    background-color: white;
+    color: dimgray;
+    border-color: lightgray;
+  }
+}
+
+.enlarged-artwork-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid gray;
+  padding-bottom: 10px;
+}
+
+.enlarged-artwork-header h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.close-enlarged-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.3s ease;
+}
+
+.close-enlarged-btn:hover {
+  background-color: #c82333;
+}
+
+.enlarged-artwork-content {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.enlarged-artwork-image {
+  max-width: 400px;
+  max-height: 400px;
+  object-fit: contain;
+  border: 1px solid gray;
+  border-radius: 4px;
+}
+
+.enlarged-artwork-details {
+  flex: 1;
+  min-width: 0;
+}
+
+.enlarged-artwork-details h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.4em;
+}
+
+.enlarged-artwork-details p {
+  margin: 8px 0;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .enlarged-artwork-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .enlarged-artwork-image {
+    max-width: 100%;
+    align-self: center;
+  }
+  
+  .enlarged-artwork-header {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .enlarged-artwork-container {
+    padding: 15px;
+  }
+  
+  .enlarged-artwork-header h2 {
+    font-size: 1.3em;
+  }
+}
 
 @media (max-width: 768px) {
   .artwork-list-container {

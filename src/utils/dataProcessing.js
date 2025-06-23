@@ -42,12 +42,11 @@ export const parseArtworkCsv = async () => {
 
           if (imageLink) {
             try {
-              const response = await fetch(imageLink, { method: 'HEAD' }); // Still use HEAD for efficiency
+              const response = await fetch(imageLink, { method: 'HEAD' });
 
               if (response.ok) {
                 const contentType = response.headers.get('Content-Type');
                 if (contentType && contentType.startsWith('image/')) {
-                  // It's an image!
                   return {
                     id: artwork.id,
                     main_reference_number: String(artwork.main_reference_number).trim(),
@@ -60,18 +59,18 @@ export const parseArtworkCsv = async () => {
                   };
                 } else {
                   console.warn(`URL for artwork ID ${artwork.id} is not an image (Content-Type: ${contentType || 'N/A'}): ${imageLink}`);
-                  return null; // Content-Type is not an image
+                  return null;
                 }
               } else {
                 console.warn(`Broken image link for artwork ID ${artwork.id}: ${imageLink} (Status: ${response.status})`);
-                return null; // Image link is broken (HTTP status not OK)
+                return null;
               }
             } catch (error) {
               console.error(`Error checking image link for artwork ID ${artwork.id}: ${imageLink}`, error);
-              return null; // Error during fetch, consider it broken
+              return null;
             }
           } else {
-            return null; // No image link to begin with
+            return null;
           }
         });
 
