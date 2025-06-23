@@ -11,6 +11,23 @@ function App() {
   const [placeFilter, setPlaceFilter] = useState('');
   const [startDateFilter, setStartDateFilter] = useState('');
   const [endDateFilter, setEndDateFilter] = useState('');
+  // New: State for favorites, initialized from localStorage
+  const [favorites, setFavorites] = useState([]);
+  // New: Load favorites from localStorage on mount
+  useEffect(() => {
+    const storedFavorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    setFavorites(storedFavorites);
+  }, []);
+
+  // New: Function to toggle favorite status and update localStorage
+  const toggleFavorite = (artworkId) => {
+    setFavorites((prev) => {
+      const isFavorited = prev.includes(artworkId);
+      const updated = isFavorited ? prev.filter((id) => id !== artworkId) : [...prev, artworkId];
+      localStorage.setItem('favorites', JSON.stringify(updated));
+      return updated;
+    });
+  };
 
   const {
     filteredArtworks,
@@ -77,7 +94,11 @@ function App() {
         )}
 
         {!loading && !error && displayArtworks.length > 0 && (
-          <ArtworkList artworks={displayArtworks} />
+          <ArtworkList
+            artworks={displayArtworks}
+            favorites={favorites}  // New: Pass favorites
+            toggleFavorite={toggleFavorite}  // New: Pass toggle function
+          />
         )}
       </div>
     </div>

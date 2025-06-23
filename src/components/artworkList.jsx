@@ -3,7 +3,7 @@ import ArtworkCard from './artworkCard';
 
 const ITEMS_PER_PAGE = 20;
 
-const ArtworkList = ({ artworks }) => {
+const ArtworkList = ({ artworks, favorites, toggleFavorite }) => {  // Updated: Added favorites and toggleFavorite props
   const [displayedItems, setDisplayedItems] = useState(ITEMS_PER_PAGE);
   const [isLoading, setIsLoading] = useState(false);
   const [enlargedArtwork, setEnlargedArtwork] = useState(null);
@@ -52,22 +52,32 @@ const ArtworkList = ({ artworks }) => {
     setEnlargedArtwork(artwork);
   };
 
-  const handleCloseEnlarged = () => {
-    setEnlargedArtwork(null);
-  };
 
-  const visibleArtworks = artworks.slice(0, displayedItems);
+  // Updated: Sort artworks to prioritize favorites before slicing
+  const sortedArtworks = [...artworks].sort((a, b) => {
+    const aIsFavorite = favorites.includes(a.id);
+    const bIsFavorite = favorites.includes(b.id);
+    return bIsFavorite - aIsFavorite;  // Favorites first (true > false in sort)
+  });
+  const visibleArtworks = sortedArtworks.slice(0, displayedItems);
+  // Updated: Modal handling with backdrop and click-outside-to-close
+  const handleCloseEnlarged = (e) => {
+    if (e.target === e.currentTarget) {  // Close only if clicking outside content
+      setEnlargedArtwork(null);
+    }
+  };
 
   return (
     <div className="artwork-list-container">
       {enlargedArtwork && (
-        <div className="enlarged-artwork-container">
-          <div className="enlarged-artwork-header">
-            <h2>Enlarged View</h2>
-            <button onClick={handleCloseEnlarged} className="close-enlarged-btn">
-              ✕ Close
-            </button>
-          </div>
+        <div className="modal-backdrop" onClick={handleCloseEnlarged}>  // New: Backdrop for modal
+          <div className="enlarged-artwork-container" onClick={(e) => e.stopPropagation()}>  // Updated: Prevent close on content click
+            <div className="enlarged-artwork-header">
+              <h2>Enlarged View</h2>
+              <button onClick={() => setEnlargedArtwork(null)} className="close-enlarged-btn">
+                ✕ Close
+              </button>
+            </div>
           <div className="enlarged-artwork-content">
             <img 
               src={enlargedArtwork.image_link} 
@@ -84,13 +94,14 @@ const ArtworkList = ({ artworks }) => {
           </div>
         </div>
       )}
-      
       <div className="artwork-grid">
         {visibleArtworks.map((artwork, index) => (
-          <ArtworkCard 
-            key={artwork.id || index} 
-            artwork={artwork} 
-            onClick={() => handleArtworkClick(artwork)} 
+          <ArtworkCard
+            key={artwork.id || index}
+            artwork={artwork}
+            onClick={() => handleArtworkClick(artwork)}
+            favorites={favorites}  // New: Pass to ArtworkCard
+            toggleFavorite={toggleFavorite}  // New: Pass to ArtworkCard
           />
         ))}
       </div>
