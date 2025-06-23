@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
+import ArtworkCard from './artworkCard';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -86,17 +87,12 @@ const ArtworkList = ({ artworks }) => {
       
       <div className="artwork-grid">
         {visibleArtworks.map((artwork, index) => (
-          <div 
+          // Replace direct rendering with ArtworkCard for lazy validation
+          <ArtworkCard 
             key={artwork.id || index} 
-            className="artwork-card clickable"
-            onClick={() => handleArtworkClick(artwork)}
-          >
-            <img src={artwork.image_link} alt={artwork.title} className="artwork-image" />
-            <h3>{artwork.title}</h3>
-            <p><strong>Artist:</strong> {artwork.artist_title || 'N/A'}</p>
-            <p><strong>Origin:</strong> {artwork.place_of_origin || 'N/A'}</p>
-            <p><strong>Date:</strong> {artwork.date_start || 'N/A'}</p>
-          </div>
+            artwork={artwork} 
+            onClick={() => handleArtworkClick(artwork)} 
+          />
         ))}
       </div>
       
