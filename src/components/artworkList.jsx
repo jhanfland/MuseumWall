@@ -21,7 +21,7 @@ const ArtworkList = ({ artworks }) => {
 
   useEffect(() => {
     setDisplayedItems(ITEMS_PER_PAGE);
-    setEnlargedArtwork(null); // Clear enlarged artwork when artworks change
+    setEnlargedArtwork(null);
   }, [artworks]);
 
   useEffect(() => {
