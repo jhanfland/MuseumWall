@@ -143,19 +143,6 @@ h1 {
   color: red;
 }
 
-.no-image-placeholder {
-  width: 100%;
-  height: 200px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #333;
-  color: #666;
-  border-bottom: 1px solid gainsboro;
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-}
-
 .loading-trigger {
   text-align: center;
   padding: 20px;
