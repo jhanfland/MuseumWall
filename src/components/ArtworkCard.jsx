@@ -28,12 +28,12 @@ const ArtworkCard = ({ artwork, isFavorited, onToggleFavorite, onDownload, onCli
 
   const handleFavoriteClick = (e) => {
     e.stopPropagation();
-    onToggleFavorite(artwork.id);
+    onToggleFavorite(artwork.id); // Stores the favorite to the favorites list in local storage
   };
 
   const handleDownloadClick = (e) => {
     e.stopPropagation();
-    onDownload(artwork.image_link, `${artwork.title}.jpg`);
+    onDownload(artwork.image_link, `${artwork.title}.jpg`); // Look at downloadImage in artworkList for implementation
   };
 
   if (isLoading) {

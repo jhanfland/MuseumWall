@@ -55,7 +55,7 @@ const ArtworkList = ({ artworks, favorites, onToggleFavorite }) => {
   const handleCloseEnlarged = () => {
     setEnlargedArtwork(null);
   };
-
+  // Robust way to handle image downloads. Works for the cross-origin images used
   const downloadImage = async (imageUrl, filename) => {
     try {
       const response = await fetch(imageUrl);

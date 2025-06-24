@@ -164,6 +164,7 @@ h1 {
   }
 }
 
+/* Styles for actions within artwork cards (favorite and download buttons) */
 .artwork-card-actions {
   position: absolute;
   top: 10px;
@@ -173,6 +174,7 @@ h1 {
   z-index: 1;
 }
 
+/* Base styles for favorite and download buttons */
 .favorite-btn,
 .download-btn {
   background-color: rgba(0, 0, 0, 0.7);
@@ -188,6 +190,7 @@ h1 {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Hover effects for favorite and download */
 .favorite-btn:hover,
 .download-btn:hover {
   background-color: rgba(0, 0, 0, 0.9);
@@ -211,6 +214,7 @@ h1 {
   }
 }
 
+/* Now uses an overlay for when artwork is enlarged */
 .enlarged-artwork-overlay {
   position: fixed;
   top: 0;
@@ -226,6 +230,7 @@ h1 {
   box-sizing: border-box;
 }
 
+/* Styles for the modal containing the enlarged artwork */
 .enlarged-artwork-modal {
   background-color: black;
   color: lightgray;
@@ -263,19 +268,20 @@ h1 {
 }
 
 .enlarged-artwork-actions .favorite-btn.favorited {
-  background-color: #dc3545;
+  background-color: #dc3545; /* Red for favorited */
 }
 
 .enlarged-artwork-actions .download-btn {
-  background-color: #28a745;
+  background-color: #28a745; /* Green for download */
 }
 
+
 .enlarged-artwork-actions .favorite-btn:hover {
-  background-color: #dc3545;
+  background-color: #dc3545; /* Darker red on hover */
 }
 
 .enlarged-artwork-actions .download-btn:hover {
-  background-color: #218838;
+  background-color: #218838; /* Darker green on hover */
 }
 @media (max-width: 768px) {
   .artwork-list-container {
